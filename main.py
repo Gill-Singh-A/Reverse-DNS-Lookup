@@ -30,9 +30,9 @@ def getInfo(ip):
     info = {}
     try:
         ipaddress.ip_address(ip)
+        host = socket.gethostbyaddr(ip)[0]
     except:
         return False
-    host = socket.gethostbyaddr(ip)[0]
     info["host"] = host
     response = requests.get(viewdns_api.replace("IP_ADDRESS", ip).replace("API_KEY", API_KEY))
     info["domains"] = [[domain["name"], domain["last_resolved"]] for domain in response.json()["response"]["domains"]] if response.status_code == 200 and int(response.json()["response"]["domain_count"]) > 0 else []
