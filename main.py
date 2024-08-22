@@ -39,4 +39,16 @@ def getInfo(ip):
     return info
 
 if __name__ == "__main__":
-    pass
+    arguments = get_arguments(('-t', "--target", "target", "Target Servers (Seperated by ',' or File Name)"))
+    if not arguments.target:
+        display('-', f"Please specify {Back.YELLOW}Target{Back.RESET}")
+        exit(0)
+    else:
+        try:
+            with open(arguments.target, 'r') as file:
+                arguments.target = [target for target in file.read().split('\n') if target != '']
+        except FileNotFoundError:
+            arguments.target = arguments.target.split(',')
+        except Exception as error:
+            display('-', f"Error Occured while Reading File {Back.MAGENTA}{arguments.target}{Back.RESET} => {Back.YELLOW}{error}{Back.RESET}")
+            exit(0)
