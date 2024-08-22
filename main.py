@@ -52,3 +52,11 @@ if __name__ == "__main__":
         except Exception as error:
             display('-', f"Error Occured while Reading File {Back.MAGENTA}{arguments.target}{Back.RESET} => {Back.YELLOW}{error}{Back.RESET}")
             exit(0)
+    for target in arguments.target:
+        info = getInfo(target)
+        if info:
+            display(':', f"{Back.MAGENTA}{target}{Back.RESET}")
+            display('+', f"HOST => {Back.MAGENTA}{info['host']}{Back.RESET}")
+            for domain, last_resolved in info["domains"]:
+                display('+', f"\tDomain = {Back.MAGENTA}{domain}{Back.RESET}\tLast Resolved = {Back.MAGENTA}{last_resolved}{Back.RESET}")
+            print()
